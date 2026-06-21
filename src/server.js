@@ -6,7 +6,6 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-// Verificar conexión con PostgreSQL
 try {
     const result = await pool.query("SELECT NOW()");
     console.log("✅ PostgreSQL conectado");
