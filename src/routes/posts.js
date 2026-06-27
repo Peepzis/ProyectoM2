@@ -2,20 +2,25 @@ import express from "express";
 import {
     getPosts,
     getPostById,
-    createPost
+    createPost,
+    updatePost,
+    deletePost,
+    getPostsByAuthor
 } from "../controllers/postController.js";
 
 const router = express.Router();
 
 router.get("/", getPosts);
 
+router.get("/author/:authorId", getPostsByAuthor);
+
 router.get("/:id", getPostById);
 
 //consultar
 router.post("/", createPost);
 
-//router.put("/:id", updatePost);
+router.put("/:id", updatePost);
 
-//router.delete("/:id", deletePost);
+router.delete("/:id", deletePost);
 
 export default router;
