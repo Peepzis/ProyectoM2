@@ -1,0 +1,217 @@
+openapi: 3.0.3
+
+info:
+  title: MiniBlog API
+  description: API REST para gestionar autores y publicaciones.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Servidor local
+
+paths:
+
+  /authors:
+    get:
+      summary: Obtener todos los autores
+      description: Devuelve una lista con todos los autores registrados.
+      responses:
+        "200":
+          description: Lista de autores obtenida correctamente.
+
+    post:
+      summary: Crear un nuevo autor
+      description: Crea un autor en la base de datos.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                bio:
+                  type: string
+      responses:
+        "201":
+          description: Autor creado correctamente.
+        "400":
+          description: Datos inválidos.
+
+  /authors/{id}:
+    get:
+      summary: Obtener un autor por ID
+      description: Devuelve un autor específico.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del autor
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Autor encontrado.
+        "404":
+          description: Autor no encontrado.
+
+    put:
+      summary: Actualizar un autor
+      description: Actualiza los datos de un autor.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del autor
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                bio:
+                  type: string
+      responses:
+        "200":
+          description: Autor actualizado correctamente.
+        "404":
+          description: Autor no encontrado.
+
+    delete:
+      summary: Eliminar un autor
+      description: Elimina un autor por su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del autor
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Autor eliminado correctamente.
+        "404":
+          description: Autor no encontrado.
+
+  /posts:
+    get:
+      summary: Obtener todos los posts
+      description: Devuelve una lista con todos los posts.
+      responses:
+        "200":
+          description: Lista de posts obtenida correctamente.
+
+    post:
+      summary: Crear un nuevo post
+      description: Crea un post en la base de datos.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author_id:
+                  type: integer
+                title:
+                  type: string
+                content:
+                  type: string
+                published:
+                  type: boolean
+      responses:
+        "201":
+          description: Post creado correctamente.
+        "400":
+          description: Datos inválidos.
+
+  /posts/{id}:
+    get:
+      summary: Obtener un post por ID
+      description: Devuelve un post específico.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del post
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Post encontrado.
+        "404":
+          description: Post no encontrado.
+
+    put:
+      summary: Actualizar un post
+      description: Actualiza un post existente.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del post
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author_id:
+                  type: integer
+                title:
+                  type: string
+                content:
+                  type: string
+                published:
+                  type: boolean
+      responses:
+        "200":
+          description: Post actualizado correctamente.
+        "404":
+          description: Post no encontrado.
+
+    delete:
+      summary: Eliminar un post
+      description: Elimina un post por su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del post
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Post eliminado correctamente.
+        "404":
+          description: Post no encontrado.
+
+  /posts/author/{authorId}:
+    get:
+      summary: Obtener posts de un autor
+      description: Devuelve todos los posts pertenecientes a un autor junto con la información del autor.
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          description: ID del autor
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Lista de posts del autor obtenida correctamente.
+        "404":
+          description: No se encontraron posts para ese autor.
