@@ -12,6 +12,53 @@ Esta API permite gestionar:
 
 Está pensada para un proyecto integrador y utiliza `pg` para conectarse a PostgreSQL.
 
+## Despliegue en Railway
+
+Dato:
+El despliegue de la API en fue realizado en render: https://proyectom2-1.onrender.com/
+
+Sigue estos pasos para publicar la API en Railway:
+
+1. Sube este repositorio a GitHub.
+2. Crea un nuevo proyecto en Railway y conéctalo al repositorio.
+3. Agrega un servicio de PostgreSQL desde Railway.
+4. En el servicio de la API, ve a Variables y define estas variables de entorno:
+
+```env
+PORT=$PORT
+NODE_ENV=production
+DB_HOST=host_del_postgres
+DB_PORT=5432
+DB_NAME=nombre_de_la_base
+DB_USER=usuario
+DB_PASSWORD=contraseña
+DB_URL=postgresql://usuario:contraseña@host:5432/nombre_de_la_base
+```
+
+> Railway también puede inyectar `DATABASE_URL`; si tu proyecto lo soporta, puedes usar esa variable en lugar de `DB_URL`.
+
+5. En la sección Deploy, define el comando de inicio:
+
+```bash
+npm start
+```
+
+6. Ejecuta el script SQL de creación de tablas en la base de datos de Railway:
+
+```bash
+psql < db/schema.sql
+```
+
+7. Una vez desplegado, Railway te dará una URL pública del tipo:
+
+```text
+https://<nombre-del-servicio>.up.railway.app
+```
+
+- URL pública: se usa para consumir la API desde fuera de Railway.
+- URL interna: se usa para comunicación privada entre servicios dentro de Railway.
+
+
 ## 🧩 Tecnologías
 
 - Node.js
@@ -151,52 +198,6 @@ GET /posts/author/1
 - `400 Bad Request` — Datos inválidos o faltantes
 - `404 Not Found` — Recurso no encontrado
 - `500 Internal Server Error` — Error del servidor
-
-## Despliegue en Railway
-
-Dato:
-El despliegue de la API en fue realizado en render: https://proyectom2-1.onrender.com/
-
-Sigue estos pasos para publicar la API en Railway:
-
-1. Sube este repositorio a GitHub.
-2. Crea un nuevo proyecto en Railway y conéctalo al repositorio.
-3. Agrega un servicio de PostgreSQL desde Railway.
-4. En el servicio de la API, ve a Variables y define estas variables de entorno:
-
-```env
-PORT=$PORT
-NODE_ENV=production
-DB_HOST=host_del_postgres
-DB_PORT=5432
-DB_NAME=nombre_de_la_base
-DB_USER=usuario
-DB_PASSWORD=contraseña
-DB_URL=postgresql://usuario:contraseña@host:5432/nombre_de_la_base
-```
-
-> Railway también puede inyectar `DATABASE_URL`; si tu proyecto lo soporta, puedes usar esa variable en lugar de `DB_URL`.
-
-5. En la sección Deploy, define el comando de inicio:
-
-```bash
-npm start
-```
-
-6. Ejecuta el script SQL de creación de tablas en la base de datos de Railway:
-
-```bash
-psql < db/schema.sql
-```
-
-7. Una vez desplegado, Railway te dará una URL pública del tipo:
-
-```text
-https://<nombre-del-servicio>.up.railway.app
-```
-
-- URL pública: se usa para consumir la API desde fuera de Railway.
-- URL interna: se usa para comunicación privada entre servicios dentro de Railway.
 
 ## 🤖 Registro de uso de IA
 
